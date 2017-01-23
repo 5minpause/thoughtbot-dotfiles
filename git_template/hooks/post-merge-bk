@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require "FileUtils"
+require "YAML"
+
+db = ""
+user = ""
+pass = ""
+branch = `git rev-parse --abbrev-ref HEAD`.gsub("/", "-").gsub("\r\n", "").gsub("\n", "")
+
+if File.exist?("./config/database.yml") && File.exist?("./db/#{branch}.sql")
+  y = YAML.load_file("./config/database.yml")
+  db = y.fetch("development", {}).fetch("database", "")
+  user = y.fetch("development", {}).fetch("username", "")
+  pass = y.fetch("development", {}).fetch("password", "")
+
+  use_pass = !pass.nil? ? "-p#{pass}" : ''
+  system("mysql -u #{user} #{use_pass} --skip-extended-insert #{db} < ./db/#{branch}.sql")
+end
+
