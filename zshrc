@@ -39,12 +39,12 @@ _load_settings() {
 }
 _load_settings "$HOME/.zsh/configs"
 
-# aliases
-[[ -f ~/.aliases ]] && source ~/.aliases
-
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 export NVM_DIR="/Users/holger/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 export PATH="/usr/local/sbin:$PATH"
+#
+# aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
